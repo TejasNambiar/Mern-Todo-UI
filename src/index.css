@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme{
+    --color-avocado-100: oklch(0.99 0 0);
+    --color-darkCyan-50  : #F0F9FB;
+    --color-darkCyan-100 : #D9EFF4;
+    --color-darkCyan-200 : #B8E0E9;
+    --color-darkCyan-300 : #B7C8D9;
+    --color-darkCyan-400 : #4FA9C1;
+    --color-darkCyan-500 : #348DA6;
+    --color-darkCyan-600 : #2E728C;
+    --color-darkCyan-700 : #2B5E73;
+    --color-darkCyan-800 : #2A4F60;
+    --color-darkCyan-900 : #274352;
+    --color-darkCyan-950 : #070E12;
+}
