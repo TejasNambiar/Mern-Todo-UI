@@ -4,7 +4,7 @@ export const Task = ({ tasks, handleTaskActions }) => {
   const { handleCompleteTask, handleOpenConfirm } = handleTaskActions;
 
   return (
-    <ul className="list-disc list-inside space-y-4">
+    <ul className="list-disc list-inside space-y-2">
       {tasks?.map((task) => (
         <li
           key={task.id}

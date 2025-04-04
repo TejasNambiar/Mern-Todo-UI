@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from "react";
 import { Task } from "./components/Task";
 import { AddTask } from "./components/AddTask";
-import { Dialog } from "@mui/material";
+import { Dialog, IconButton } from "@mui/material";
 import { ConfirmDeleteDialog } from "./components/ConfirmDeleteDialog";
 import {
   list,
@@ -13,8 +13,8 @@ import {
   handleClickOpen,
   handleClose,
 } from "./Utils/taskUtils";
-// import { ReactComponent as Svg1 } from './assets/menu.svg';
-// import { ReactComponent as Svg2 } from './assets/setting.svg';
+import { MultiCardList } from "./Utils/Data";
+import { SideNav } from "./components/SideNav";
 
 export const Dashboard = () => {
   const [tasks, dispatch] = useReducer(taskReducer, []);
@@ -25,6 +25,7 @@ export const Dashboard = () => {
     task: "",
     completed: false,
   });
+  const [sideNavOpen, setSideNavOpen] = useState(false);
 
   useEffect(() => {
     // Populate the task list when the component mounts
@@ -43,7 +44,10 @@ export const Dashboard = () => {
 
   const handleConfirmDelete = () => {
     if (taskToDelete !== null) {
-      handleDeleteTask(taskToDelete);
+      console.log("Before Delete:", tasks); // Debugging
+      document.activeElement?.blur(); // REMOVE focus before deleting
+      handleDeleteTask(dispatch, taskToDelete);
+      console.log("After Delete:", tasks); // Debugging
     }
     handleCloseConfirm();
   };
@@ -56,13 +60,27 @@ export const Dashboard = () => {
     handleOpenConfirm,
   };
 
+  const toggleDrawer = (open) => () => {
+    setSideNavOpen(open);
+  };
+
+  console.log("multicardlist: " + MultiCardList);
+
   return (
     <div className="flex items-center p-3 text-white gap-2">
       <div
-        className={` ${false}s?'w-2/3':'w-9.5/10' flex flex-col items-center rounded-xl gap-2`}
+        className={`${sideNavOpen ? "w-1/3" : "w-0"} transition-all duration-300
+          bg-gradient-to-r from-darkCyan-400 to-darkCyan-950 border border-white rounded-xl
+        `}
+      >
+        <SideNav open={sideNavOpen} cardList={MultiCardList} />
+      </div>
+      <div
+        className={` ${sideNavOpen}s?'w-2/3':'w-9.5/10' flex flex-col items-center rounded-xl gap-2`}
+        style={{ height: "100vh" }}
       >
         <section className="w-full flex items-center justify-between border border-darkCyan-400 rounded-xl">
-          <span className="ml-2">
+          <IconButton className="ml-2" onClick={toggleDrawer(!sideNavOpen)}>
             <svg
               class="fill-darkCyan-200 hover:fill-darkCyan-400"
               xmlns="http://www.w3.org/2000/svg"
@@ -73,9 +91,9 @@ export const Dashboard = () => {
             >
               <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
             </svg>
-          </span>
+          </IconButton>
           <h1 className="p-4">Dashboard</h1>
-          <span className="mr-2">
+          <IconButton className="mr-2">
             <svg
               class="fill-darkCyan-200 hover:fill-darkCyan-400"
               xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +111,7 @@ export const Dashboard = () => {
             0 99-41t41-99q0-58-41-99t-99-41q-59 0-99.5 41T342-480q0 58 40.5 99t99.5 41Zm-2-140Z"
               />
             </svg>
-          </span>
+          </IconButton>
         </section>
         <section className="w-full flex justify-items-end flex-row-reverse items-center rounded-xl gap-2">
           <button
@@ -127,11 +145,13 @@ export const Dashboard = () => {
         >
           <AddTask tempTask={tempTask} handleTaskActions={handleTaskActions} />
         </Dialog>
-        <ConfirmDeleteDialog
-          open={confirmOpen}
-          handleClose={handleCloseConfirm}
-          handleConfirm={handleConfirmDelete}
-        />
+        {confirmOpen && (
+          <ConfirmDeleteDialog
+            open={confirmOpen}
+            handleClose={handleCloseConfirm}
+            handleConfirm={handleConfirmDelete}
+          />
+        )}
         <section className="w-full">
           <Task tasks={tasks} handleTaskActions={handleTaskActions} />
         </section>

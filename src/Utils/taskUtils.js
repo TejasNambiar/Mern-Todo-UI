@@ -17,6 +17,7 @@ export const list = [
 ];
 
 export function taskReducer(tasks, action) {
+  console.log("Reducer action received:", action);
   switch (action.type) {
     case "ADD": {
       let lastId = tasks.length > 0 ? tasks[tasks.length - 1].id : 0;
@@ -34,7 +35,10 @@ export function taskReducer(tasks, action) {
         task.id === action.id ? { ...task, completed: !task.completed } : task
       );
     case "DELETE":
-      return tasks.filter((task) => task.id !== action.id);
+      console.log("Before DELETE:", tasks);
+      const updatedTasks = tasks.filter((task) => task.id !== action.id);
+      console.log("After DELETE:", updatedTasks);
+      return updatedTasks;
     case "SET":
       return action.tasks;
     default:
@@ -51,10 +55,11 @@ export const handleAddTask = (dispatch, setTempTask, handleClose) => (task) => {
   handleClose();
 };
 
-export const handleDeleteTask = (dispatch) => (id) => {
+export const handleDeleteTask = (dispatch, id) => {
+  console.log("Dispatching DELETE action for task:", id);
   dispatch({
     type: "DELETE",
-    id: id,
+    id,
   });
 };
 
