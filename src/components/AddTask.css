@@ -1,0 +1,20 @@
+.shadow-right {
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1); /* Adjust the values for a more subtle effect */
+  }
+  
+  .gradient-border {
+    position: relative;
+    background: transparent;
+  }
+  
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(to bottom, var(--color-darkCyan-500), var(--color-darkCyan-900));
+    border-radius: inherit;
+    z-index: -1;
+  }
