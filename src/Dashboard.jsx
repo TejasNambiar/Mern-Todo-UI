@@ -70,7 +70,7 @@ export const Dashboard = () => {
     <div className="flex items-center p-3 text-white gap-2">
       <div
         className={`${sideNavOpen ? "w-1/3" : "w-0"} transition-all duration-300
-          bg-gradient-to-r from-darkCyan-400 to-darkCyan-950 border border-white rounded-xl
+          bg-gradient-to-l from-darkCyan-950 to-darkCyan-700 rounded-xl
         `}
       >
         <SideNav open={sideNavOpen} cardList={MultiCardList} />

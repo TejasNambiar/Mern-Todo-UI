@@ -6,7 +6,11 @@ export const SideNav = ({ open, cardList }) => {
     <div style={{ minWidth: "200px", height: "100vh", padding: "5px" }}>
       <List>
         {cardList?.map((card) => (
-          <ListItem button key={card.id}>
+          <ListItem
+            button
+            key={card.id}
+            className=" hover:bg-gradient-to-l from-darkCyan-950 to-darkCyan-750 rounded-xl"
+          >
             <ListItemText primary={card.taskHeading} />
             <ListItemIcon>
               <svg
